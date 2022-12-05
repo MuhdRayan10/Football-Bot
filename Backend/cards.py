@@ -56,7 +56,7 @@ def get_team(db, team):
     return db.select(match[0], dict_format=True) if match else None
 
 def create_team(user, team):
-    db = Database(f"./Data/Worlds/{user}/teams")
+    db = Database(f"./Data/Worlds/{user}/teams", spaces=True)
 
     info = []
     team = get_team(db, team)
@@ -64,3 +64,18 @@ def create_team(user, team):
         info.append(f"{i+1}. {player['player']} [{player['rating']}] - {player['age']} yrs - {player['position']} -- ${player['value']}")
     
     return ['```css'] + info + ['```']
+
+def create_team(team, user):
+    from Backend.starting11 import starting11 
+    #db = Database(f"./Data/Worlds/{user}/teams", spaces=True)
+    team_11 = starting11(team, user)
+
+    template = Image.open(f"./Data/Formations/433.png")
+    for pos, player in team_11:
+        positions = {'GK':(), 'CB':[(), ()]}
+
+
+    print(team_11)
+    
+
+

@@ -18,7 +18,6 @@ async def on_ready():
     print(f"Connected to discord as {client.user}")
     await client.change_presence(activity=discord.Game(name="Footballing..."))
 
-
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 client.run(TOKEN)

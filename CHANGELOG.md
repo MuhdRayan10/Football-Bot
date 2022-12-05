@@ -42,6 +42,11 @@ ___
 - [x] Generate World
 - [x] Calculate player value
 - [x] Make player GUI to view players
-- [ ] Make team GUI to view teams
+- [ ] Make team GUI to view teams (currently working on)
 - [x] Create mail inbox
-- [ ] Create AI for finding Starting XI (curently working on)
+- [x] Create AI for finding Starting XI
+- [ ] Convert to slash commands
+- [ ] Generate offers for user
+- [ ] League Fixture Generation
+- [ ] View league standings
+- [ ] Match Simulation
