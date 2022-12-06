@@ -1,11 +1,13 @@
 from easy_sqlite3 import *
+from os import getcwd
 
 def starting11(team, user): # for 4-3-3 formation
-    team_db = Database(f"./Data/Worlds/{user}/teams")
+    
+    team_db = Database(f"Data/Worlds/{user}/teams")
 
     players = team_db.select(team.replace(" ","_"), selected=("player", "rating", "position"))
 
-    team = {pos:[] for pos in ['GK', 'LB', 'CB', 'CB', 'LM', 'CM', 'RM', 'LW', 'ST', 'RW']}
+    team = {pos:[] for pos in ['GK', 'LB', 'CB', 'CB', 'RB', 'LM', 'CM', 'RM', 'LW', 'ST', 'RW']}
 
     for player in players:
         pos = player[2]

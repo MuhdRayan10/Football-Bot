@@ -4,7 +4,7 @@ import difflib
 
 
 def get_match(player, db):
-    print([n[0] for n in db.select("players")])
+    
     match = difflib.get_close_matches(player, [n[0] for n in db.select("players")], n=1)
     return db.select("players", where={"player":match[0] if match else '------'}, dict_format=True)
 
@@ -60,22 +60,31 @@ def create_team(user, team):
 
     info = []
     team = get_team(db, team)
+    db.close()
     for i, player in enumerate(team):
         info.append(f"{i+1}. {player['player']} [{player['rating']}] - {player['age']} yrs - {player['position']} -- ${player['value']}")
     
     return ['```css'] + info + ['```']
 
-def create_team(team, user):
+def create_team_image(team, user):
     from Backend.starting11 import starting11 
     #db = Database(f"./Data/Worlds/{user}/teams", spaces=True)
     team_11 = starting11(team, user)
+    print(team_11)
 
     template = Image.open(f"./Data/Formations/433.png")
-    for pos, player in team_11:
-        positions = {'GK':(), 'CB':[(), ()]}
-
-
-    print(team_11)
+    for pos, player in team_11.items():
+        positions = {'GK':(25,250), 'ST':(675, 250), 'LW':(625, 75), 'RW':(625, 425),
+                'LM':(425, 125), 'RM':(425, 350), 'LB':(210,35), 'RB':(210, 425)}
+        
+        if pos not in positions: continue
+        for p in player:
+            
+            card = create_card(user, p[0]).resize((140, 150), Image.ANTIALIAS)
+    
+            template.paste(card, positions[pos], card.convert("RGBA"))
+    template.show()
+    return template
     
 
 
