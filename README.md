@@ -37,3 +37,8 @@ A mail is divided based on its type:
 
 1. Message
 2. Offer
+
+## Starting XI 
+
+The logic for finding a team's starting XI is simple: Find the best players for each position. For now, this is the maximum complexity. the `starting11` function returns a dictionary with all the starting players included. A team's starting XI can be viewed with the command `+show 11 <team>` (NOTE: Proportions will be fixed later)
+

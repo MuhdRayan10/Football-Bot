@@ -46,7 +46,7 @@ def create_card(user, player):
     card_img.paste(club_img, (210, 150), club_img.convert("RGBA"))
 
     db.close()
-    del db
+    del drawer
 
     return card_img
 
@@ -68,22 +68,32 @@ def create_team(user, team):
 
 def create_team_image(team, user):
     from Backend.starting11 import starting11 
-    #db = Database(f"./Data/Worlds/{user}/teams", spaces=True)
-    team_11 = starting11(team, user)
-    print(team_11)
 
+    db = Database(f"./Data/Worlds/{user}/teams", spaces=True)
+
+    team = difflib.get_close_matches(team, list(db.get_tables().keys()), n=1)
+    if not team: return None
+
+    db.close()
+
+    team_11 = starting11(team[0], user)
+    print(team_11)
+    
     template = Image.open(f"./Data/Formations/433.png")
     for pos, player in team_11.items():
-        positions = {'GK':(25,250), 'ST':(675, 250), 'LW':(625, 75), 'RW':(625, 425),
-                'LM':(425, 125), 'RM':(425, 350), 'LB':(210,35), 'RB':(210, 425)}
+        positions = {'GK':(10,250), 'ST':(695, 250), 'LW':(625, 75), 'RW':(625, 425),
+                'LM':(440, 125), 'RM':(440, 370), 'LB':(225,35), 'RB':(225, 450),
+                'CM':(325, 250), 'CB':[(150, 170), (150, 320)]}
         
-        if pos not in positions: continue
-        for p in player:
-            
+        
+        for i, p in enumerate(player):
             card = create_card(user, p[0]).resize((140, 150), Image.ANTIALIAS)
-    
-            template.paste(card, positions[pos], card.convert("RGBA"))
-    template.show()
+            location = positions[pos][i] if pos == 'CB' else positions[pos]
+            template.paste(card, location, card.convert("RGBA"))
+
+    club = Image.open(f"./Data/Clubs/{team[0]}.png").resize((150, 150), Image.ANTIALIAS)
+    template.paste(club, (810, 500), club.convert("RGBA"))
+            
     return template
     
 

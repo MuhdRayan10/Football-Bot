@@ -35,17 +35,23 @@ ___
 
 - Added a mail system for the user to be able to interact with the world
   
-  
+## Version 0.0.7
+
+- Created logic for finding a team's starting XI
+- Made team starting XI viewable using +show 11 <team> command, which gives a generated image of the starting team (best players)
+
+
 ### Work to be done
 
 - [x] Register User
 - [x] Generate World
 - [x] Calculate player value
 - [x] Make player GUI to view players
-- [ ] Make team GUI to view teams (currently working on)
+- [x] Make team GUI to view teams 
 - [x] Create mail inbox
 - [x] Create AI for finding Starting XI
-- [ ] Convert to slash commands
+- [ ] Migrate to slash commands (currently working on)
+- [ ] Fix some proportions
 - [ ] Generate offers for user
 - [ ] League Fixture Generation
 - [ ] View league standings

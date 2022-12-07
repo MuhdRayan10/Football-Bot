@@ -31,7 +31,7 @@ def generate_player(name, pos):
     return Player(name, pos, rating)
 
 def generate_players():
-    POSITIONS = ['GK', 'LB', 'CB', 'CB', 'LM', 'CM', 'RM', 'LW', 'ST', 'RW']
+    POSITIONS = ['GK', 'LB', 'CB', 'CB', 'RB', 'LM', 'CM', 'RM', 'LW', 'ST', 'RW']
     players = {}
 
     with open('./Data/Generation/first_names.txt', 'r') as f:

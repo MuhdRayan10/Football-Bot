@@ -18,11 +18,6 @@ async def on_ready():
     print(f"Connected to discord as {client.user}")
     await client.change_presence(activity=discord.Game(name="Footballing..."))
 
-"""from Backend.cards import create_team
-create_team("Arsenal", 984245773887766551)
-
-exit()"""
-
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 client.run(TOKEN)

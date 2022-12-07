@@ -1,5 +1,5 @@
 from discord.ext import commands
-from Backend.cards import create_card, create_team
+from Backend.cards import create_card, create_team, create_team_image
 
 from io import BytesIO
 import discord
@@ -36,6 +36,20 @@ class View(commands.Cog):
 
             for msg in final_list:
                 await ctx.send(msg)
+
+        elif field in ('starting11', '11', 'eleven'):
+            with BytesIO() as image_binary:
+                team = create_team_image(' '.join(data), ctx.author.id)
+                if not team:
+                    await ctx.reply(f"A team with the name `{' '.join(data)}` was not found...")
+                    return
+
+                team.save(image_binary, 'PNG')
+                image_binary.seek(0)
+                await ctx.send(file=discord.File(fp=image_binary, filename='image.png'))
+            
+
+                
 
         else:
             await ctx.reply(f"Could not recognize the field `{field}`")
