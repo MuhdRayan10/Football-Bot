@@ -42,3 +42,5 @@ A mail is divided based on its type:
 
 The logic for finding a team's starting XI is simple: Find the best players for each position. For now, this is the maximum complexity. the `starting11` function returns a dictionary with all the starting players included. A team's starting XI can be viewed with the command `+show 11 <team>` (NOTE: Proportions will be fixed later)
 
+![image](https://user-images.githubusercontent.com/119870649/206257976-d61168d7-1ad8-477f-b75f-e40266c3a210.png)
+
