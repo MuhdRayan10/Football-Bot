@@ -6,27 +6,27 @@ from discord import app_commands
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = commands.Bot(intents=intents, command_prefix='+')
+bot = commands.Bot(intents=intents, command_prefix='+')
 
 async def load_cogs():
     for file in os.listdir('./cogs'):
         if file.endswith('.py'):
-            await client.load_extension(f'cogs.{file[:-3]}')
+            await bot.load_extension(f'cogs.{file[:-3]}')
 
 
-@client.command()
-async def sync(ctx):
-    fmt = await ctx.bot.tree.sync()
-    await ctx.send(f"Synced {len(fmt)} commands")
+@bot.command()
+async def sync():
+    fmt = await bot.tree.sync()
+    print(f"{fmt} commands have been synced")
 
 
-@client.event
+@bot.event
 async def on_ready():
     await load_cogs()
-    print(f"Connected to discord as {client.user}")
-    await client.change_presence(activity=discord.Game(name="Footballing..."))
+    print(f"Connected to discord as {bot.user}")
+    await bot.change_presence(activity=discord.Game(name="Footballing..."))
     await sync()
     
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
-client.run(TOKEN)
+bot.run(TOKEN)

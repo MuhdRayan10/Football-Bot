@@ -11,21 +11,27 @@ class View(commands.Cog):
         self.client = client
 
     @app_commands.command(name='view', description="View Images of players, teams, etc")
-    async def show(self, interaction:discord.Interaction, field:str, *data):
-        if field in ('player'):
-            name = ' '.join(data)
+    @app_commands.describe(field="The type of image you want to view")
+    @app_commands.choices(field=[
+        app_commands.Choice(name="Player", value="player"),
+        app_commands.Choice(name="Squad", value="squad"),
+        app_commands.Choice(name="Starting XI", value="11")])
+    async def view(self, interaction:discord.Interaction, field:str, name:str):
+        user = interaction.user
+        name = ' '.join(name)
+        if field == "player":
             with BytesIO() as image_binary:
-                card = create_card(ctx.author.id, name)
+                card = create_card(user.id, name)
                 if not card: 
-                    await ctx.reply(f"I couldn't find a player with the name `{name}`... Please try again!")
+                    await interaction.response.send_message(f"I couldn't find a player with the name `{name}`... Please try again!")
                     return
                 card.save(image_binary, 'PNG')
                 image_binary.seek(0)
-                await ctx.send(file=discord.File(fp=image_binary, filename='image.png'))
-        elif field in ('squad'):
-            team = create_team(ctx.author.id, ' '.join(data))
+                await interaction.response.send_message(file=discord.File(fp=image_binary, filename='image.png'))
+        elif field == 'squad':
+            team = create_team(user.id, name)
             if not team:
-                await ctx.reply(f"A team with the name `{team}` was not found...")
+                await interaction.response.send_message(f"A team with the name `{name}` was not found...")
                 return
 
             n = 2000
@@ -37,24 +43,21 @@ class View(commands.Cog):
                     final_list.append(sentence)
 
             for msg in final_list:
-                await ctx.send(msg)
+                await interaction.followup.send(msg)
 
-        elif field in ('starting11', '11', 'eleven'):
+        elif field == '11':
             with BytesIO() as image_binary:
-                team = create_team_image(' '.join(data), ctx.author.id)
+                team = create_team_image(name, user.id)
                 if not team:
-                    await ctx.reply(f"A team with the name `{' '.join(data)}` was not found...")
+                    await interaction.response.send_message(f"A team with the name `{name}` was not found...")
                     return
 
                 team.save(image_binary, 'PNG')
                 image_binary.seek(0)
-                await ctx.send(file=discord.File(fp=image_binary, filename='image.png'))
-            
-
-                
+                await interaction.response.send_message(file=discord.File(fp=image_binary, filename='image.png'))    
 
         else:
-            await ctx.reply(f"Could not recognize the field `{field}`")
+            await interaction.response.send_message(f"Could not recognize the field `{field}`")
 
 
 
