@@ -1,7 +1,9 @@
 from Backend.generator import generate_world, destroy_world
 from discord.ext import commands
+from discord import app_commands
 from easy_sqlite3 import *
 import asyncio
+import discord
 
 
 class Register(commands.Cog):
@@ -13,44 +15,34 @@ class Register(commands.Cog):
 
         db.close()
 
-    @commands.command(aliases=['signup', 'new','start'])
-    async def register(self, ctx):
+    @app_commands.command(name="register", description="Create your own football world!")
+    async def register(self, interaction:discord.Interaction, name: str):
         
         db = Database('./Data/users.db')
 
-        if not db.if_exists('users', {'id':ctx.author.id}):
-            await ctx.reply("What shall be your manager name?")
-            try:
-                name = await self.client.wait_for("message", check=lambda m: bool(len(m.content) and m.author.id == ctx.author.id), timeout=20.0)
-            except asyncio.TimeoutError:
-                await ctx.send("Looks like you don't want to register.")
-                db.close()
-                return
+        if not db.if_exists('users', {'id':interaction.user.id}):
             
-            db.insert('users', (ctx.author.id, name.content))
-            
-            await name.reply(f"Registered {ctx.author.mention} as `{name.content}`!")
-            generate_world(ctx.author.id)
+            db.insert('users', (interaction.user.id, name))
+
+            await interaction.response.send_message(f"Registered {interaction.user.mention} as `{name}`!") 
+            generate_world(interaction.user.id)
 
             db.close()
-            return
-
-        await ctx.reply("Looks like you have already registered!")
+        else:    
+            await interaction.response.send_message("Looks like you have already registered!")
     
-    @commands.command()
-    async def unregister(self, ctx):
+    @app_commands.command(name="unregister", description="Delete your world")
+    async def unregister(self, interaction:discord.Interaction):
         db = Database('./Data/users.db')
-        
-        try:
-            if db.if_exists('users', {'id':ctx.author.id}):
-                db.delete('users', where={'id':ctx.author.id})
+        user = interaction.user
+    
+        if db.if_exists('users', {'id':user.id}):
+            db.delete('users', where={'id':user.id})
 
-                await ctx.reply(f"Unregistered {ctx.author.mention}!")
-                destroy_world(ctx.author.id)
-            else:
-                await ctx.reply("Looks like you aren't even registered to begin with.")
-        except Exception as e:
-            print(f"ERROR: {e}")
+            await interaction.response.send_message(f"Unregistered {user.mention}... Sad to see you go :(")
+            destroy_world(user.id)
+        else:
+            await interaction.response.send_message("Looks like you aren't even registered to begin with.")
 
         db.close()
 

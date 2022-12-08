@@ -1,3 +1,4 @@
+from discord import app_commands
 from discord.ext import commands
 from easy_sqlite3 import *
 from discord.ui import View
@@ -115,7 +116,7 @@ class Mail(commands.Cog):
             if msg:
                 await view.msg.edit(embed=embed, view=view)
             else:
-                view.msg = await ctx.reply(embed=embed, view=view)
+                view.msg = await ctx.response.send_message(embed=embed, view=view)
 
             result = await view.if_msg_read()
             if not result: return
@@ -128,26 +129,27 @@ class Mail(commands.Cog):
         else:
             await msg.edit(embed=discord.Embed(title="All Mails Read", color=0x2ecc71), view=None)
 
-    @commands.command(aliases=['inbox'])
-    async def mail(self, ctx):
-        mail_db = Database(f"./Data/Worlds/{ctx.author.id}/mail")
+    @app_commands.command(name="mail", description="View your world's notifications")
+    async def mail(self, interaction: discord.Interaction):
+        user = interaction.user.id
+        mail_db = Database(f"./Data/Worlds/{user}/mail")
         user_db = Database(f"./Data/users")
 
 
         if mail_db.if_exists("inbox", where={"status": 0}):
 
             mails = mail_db.select("inbox", where={"status":0}, dict_format=True)
-            name = user_db.select("users", selected=["name"], size=1, where={"id": ctx.author.id})[0]
+            name = user_db.select("users", selected=["name"], size=1, where={"id": user})[0]
 
-            self.unread_mails[ctx.author.id] = [mails] if isinstance(mails, dict) else mails
+            self.unread_mails[user] = [mails] if isinstance(mails, dict) else mails
 
             mail_db.close()
             user_db.close()
             
-            await self.display_mails(ctx.author.id, name, ctx=ctx)
+            await self.display_mails(user, name, ctx=interaction)
 
         else:
-            await ctx.reply("No new messages!")
+            await interaction.response.send_message("No new messages!")
             
 
                  

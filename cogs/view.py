@@ -1,5 +1,7 @@
 from discord.ext import commands
 from Backend.cards import create_card, create_team, create_team_image
+from discord import app_commands
+import discord
 
 from io import BytesIO
 import discord
@@ -8,8 +10,8 @@ class View(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=['view', 'inspect'])
-    async def show(self, ctx, field, *data):
+    @app_commands.command(name='view', description="View Images of players, teams, etc")
+    async def show(self, interaction:discord.Interaction, field:str, *data):
         if field in ('player'):
             name = ' '.join(data)
             with BytesIO() as image_binary:
@@ -20,7 +22,7 @@ class View(commands.Cog):
                 card.save(image_binary, 'PNG')
                 image_binary.seek(0)
                 await ctx.send(file=discord.File(fp=image_binary, filename='image.png'))
-        elif field in ('team'):
+        elif field in ('squad'):
             team = create_team(ctx.author.id, ' '.join(data))
             if not team:
                 await ctx.reply(f"A team with the name `{team}` was not found...")
