@@ -31,6 +31,12 @@ class Owner(commands.Cog):
 
         await interaction.response.send_message("Deleted: {}".format('\n'.join([u[1] for u in users])))
 
+    @commands.command()
+    async def sync(self, ctx):
+        fmt = await ctx.bot.tree.sync()
+
+        await ctx.send(f"Synced {len(fmt)} commands.")
+
         
 async def setup(client):
     await client.add_cog(Owner(client), guilds=[discord.Object(id=1011656058277732412)])

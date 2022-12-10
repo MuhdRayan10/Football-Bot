@@ -40,7 +40,6 @@ ___
 - Created logic for finding a team's starting XI
 - Made team starting XI viewable using +show 11 <team> command, which gives a generated image of the starting team (best players)
 
-
 ### Work to be done
 
 - [x] Register User
@@ -50,9 +49,10 @@ ___
 - [x] Make team GUI to view teams 
 - [x] Create mail inbox
 - [x] Create AI for finding Starting XI
-- [ ] Migrate to slash commands (currently working on)
+- [x] Migrate to slash commands 
 - [ ] Fix some proportions
 - [ ] Generate offers for user
 - [ ] League Fixture Generation
 - [ ] View league standings
 - [ ] Match Simulation
+- [ ] Match Gameplay Logic (currently working on)

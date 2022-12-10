@@ -8,7 +8,7 @@ The code for player generation resides in `./Backend/generation.py`, while the t
 
 The generation script is to be activated when a user creates a new world, thus needing new players. It returns a list of Player class objects which have attributes that can be accessed. (The class can be printed as well to display relevant information)
 
-Each player is assigned to a team, and all the relevant databases are created for the world. The data is then passed into the database and saved. All of this is done when the user types `+register` after which a new world is created (only the user can play in it, although multiplayer will be developed in the future). To unregister, just type `+unregister` and all the data that was saved will be removed (IRREVERSIBLE).
+Each player is assigned to a team, and all the relevant databases are created for the world. The data is then passed into the database and saved. All of this is done when the user types `/register` after which a new world is created (only the user can play in it, although multiplayer will be developed in the future). To unregister, just type `/unregister` and all the data that was saved will be removed (IRREVERSIBLE).
 
 ## Player Value Calculation
 
@@ -23,7 +23,7 @@ This is to deal with complex stuff like potential, since a higher rated young pl
 
 ## Player card generation
 
-For showcasing different aspects such as position and rating of a particular player, the `+show <field> <name>` command can be used to view a digitally created card like the one that follows:
+For showcasing different aspects such as position and rating of a particular player, the `/view <field> <name>` command can be used to view a digitally created card like the one that follows:
 
 ![image](https://user-images.githubusercontent.com/75207653/201659866-978d9b20-e5ec-44b9-976f-e077977196ed.png)
 
@@ -40,7 +40,6 @@ A mail is divided based on its type:
 
 ## Starting XI 
 
-The logic for finding a team's starting XI is simple: Find the best players for each position. For now, this is the maximum complexity. the `starting11` function returns a dictionary with all the starting players included. A team's starting XI can be viewed with the command `+show 11 <team>` (NOTE: Proportions will be fixed later)
+The logic for finding a team's starting XI is simple: Find the best players for each position. For now, this is the maximum complexity. the `starting11` function returns a dictionary with all the starting players included. A team's starting XI can be viewed with the command `/view 11 <team>` (NOTE: Proportions will be fixed later)
 
 ![image](https://user-images.githubusercontent.com/119870649/206257976-d61168d7-1ad8-477f-b75f-e40266c3a210.png)
-

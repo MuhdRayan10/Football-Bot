@@ -62,9 +62,9 @@ def create_team(user, team):
     team = get_team(db, team)
     db.close()
     for i, player in enumerate(team):
-        info.append(f"{i+1}. {player['player']} [{player['rating']}] - {player['age']} yrs - {player['position']} -- ${player['value']}")
+        info.append(f"{i+1}. {player['player']} [{player['rating']}] - {player['age']} yrs - {player['position']} -- ${player['value']:,}")
     
-    return ['```css'] + info + ['```']
+    return info
 
 def create_team_image(team, user):
     from Backend.starting11 import starting11 
@@ -77,7 +77,6 @@ def create_team_image(team, user):
     db.close()
 
     team_11 = starting11(team[0], user)
-    print(team_11)
     
     template = Image.open(f"./Data/Formations/433.png")
     for pos, player in team_11.items():
