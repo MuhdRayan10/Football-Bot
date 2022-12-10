@@ -39,6 +39,10 @@ ___
 
 - Created logic for finding a team's starting XI
 - Made team starting XI viewable using +show 11 <team> command, which gives a generated image of the starting team (best players)
+  
+## Version 0.0.8
+
+- Migrated to slash commands
 
 ### Work to be done
 
