@@ -60,3 +60,5 @@ ___
 - [ ] View league standings
 - [ ] Match Simulation
 - [ ] Match Gameplay Logic (currently working on)
+- [ ] Gameplay Weighting
+- [ ] Add all the Prem teams

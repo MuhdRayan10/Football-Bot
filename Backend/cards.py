@@ -77,6 +77,7 @@ def create_team_image(team, user):
     db.close()
 
     team_11 = starting11(team[0], user)
+    print(team_11)
     
     template = Image.open(f"./Data/Formations/433.png")
     for pos, player in team_11.items():
