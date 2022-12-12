@@ -1,61 +1,77 @@
 {
-    "attack": {
-        "flank": {
-            "cross": {},
-            "cutback": {},
-            "dribble": {},
-            "shoot": {},
-            "pass": {}
-        }, 
-        "penalty_box": {
-            "shoot": {},
-            "dribble": {},
-            "dive": {},
-            "pass": {}
+    "offense": {
+        "attack": {
+            "flank": {
+                "options": {
+                    "cross": {},
+                    "cutback": {},
+                    "dribble": {},
+                    "shoot": {},
+                    "pass": {}
+                }
+            },
+            "penalty_box": {
+                "options": {
+                    "shoot": {},
+                    "dribble": {},
+                    "dive": {},
+                    "pass": {}
+                }
+            },
+            "header": {
+                "options": {
+                    "power_header": {},
+                    "placement_header": {}
+                }
+            },
+            "outside_box": {
+                "options": {
+                    "shoot": {},
+                    "through_ball": {},
+                    "cross": {},
+                    "pass": {},
+                    "dribble": {}
+                }
+            },
+            "1v1": {
+                "options": {
+                    "chip": {},
+                    "nutmeg": {},
+                    "power_shot": {},
+                    "placement_shot": {}
+                }
+            }
         },
-        "header": {
-            "power_header": {},
-            "placement_header": {}
+        "midfield": {
+            "buildup": {
+                "options": {
+                    "back_pass": {},
+                    "pass": {},
+                    "through_ball": {},
+                    "dribble": {},
+                    "long_ball": {}
+                }
+            }
         },
-        "outside_box": {
-            "shoot": {},
-            "through_ball": {},
-            "cross": {},
-            "pass": {},
-            "dribble": {}
-        },
-        "1v1": {
-            "chip": {},
-            "nutmeg": {},
-            "power_shot":{},
-            "placement_shot": {}
+        "defense": {
+            "press": {
+                "options": {
+                    "long_ball": {},
+                    "back_pass": {},
+                    "pass": {},
+                    "clear": {},
+                    "dribble": {}
+                }
+            },
+            "buildup": {
+                "options": {
+                    "long_ball": {},
+                    "dribble": {},
+                    "back_pass": {},
+                    "pass": {}
+                }
+            }
         }
     },
-    "midfield": {
-        "buildup": {
-            "back_pass": {},
-            "pass": {},
-            "through_ball": {},
-            "dribble": {},
-            "long_ball": {}
-        }
-    },
-    "defense": {
-        "press": {
-                "long_ball": {},
-                "back_pass":{},
-                "pass": {},
-                "clear": {},
-                "dribble": {}
-            
-        },
-        "buildup": {
-            
-                "long_ball": {},
-                "dribble": {},
-                "back_pass": {},
-                "pass": {}
-
-        }
-    }
+    "defense": {}
 }
