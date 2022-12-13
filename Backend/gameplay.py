@@ -31,7 +31,11 @@ class Chance:
         print(self.chance_type, self.position, self.options)
 
     def defense(self):
-        pass
+        self.gameplay_data = self.gameplay_data["defense"][self.position]
+        self.chance_type = random.choice(list(self.gameplay_data.keys()))
+
+        self.options = list(self.gameplay_data[self.chance_type]["options"].keys())
+        print(self.chance_type, self.position, self.options)
 
 Chance(team1, team2)
 
