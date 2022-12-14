@@ -21,7 +21,8 @@
             "header": {
                 "options": {
                     "power_header": {},
-                    "placement_header": {}
+                    "placement_header": {},
+                    "pass": {}
                 }
             },
             "outside_box": {
