@@ -1,5 +1,6 @@
 import random
 import json
+import time
 
 team1 = {'GK': [('Denis Ambrose', 84, 'GK')], 'LB': [('Taylor Jerry', 88, 'LB')], 'CB': [('Thomas Carlo', 78, 'CB'), ('Ed Charlie', 83, 'CB')],
  'RB': [('Kareem Genaro', 76, 'RB')], 'LM': [('Roscoe Justin', 65, 'LM')], 'CM': [('Rickie Marlon', 74, 'CM')], 'RM': [('Odis Lamont', 72, 'RM')],
@@ -43,18 +44,23 @@ class Team:
 
 
 class Chance:
-    def __init__(self, team1, team2):
-        self.position = random.choice(["defense", "midfield", "attack"])    
-
-        self.team1_chance = random.choice([True, False])
+    def __init__(self, team1, team2, weight, linked=False, prev_chance=None, action=None):
         
-        self.team1 = team1
-        self.team2 = team2
+        if linked:
+            self.position = random.choice(["defense", "midfield", "attack"])    
 
-        with open("./Data/gameplay.json", "r") as f:
-            self.gameplay_data = json.load(f)
+            self.team1_chance = random.choices([True, False], weights=weight)
+            
+            self.team1 = team1
+            self.team2 = team2
 
-        self.chance("offense") if self.team1_chance else self.chance("defense") 
+            with open("./Data/gameplay.json", "r") as f:
+                self.gameplay_data = json.load(f)
+
+            self.chance("offense") if self.team1_chance else self.chance("defense") 
+        else:
+            pass
+
 
     def chance(self, mode):
         self.gameplay_data = self.gameplay_data[mode][self.position]
@@ -62,6 +68,9 @@ class Chance:
 
         self.options = list(self.gameplay_data[self.chance_type]["options"].keys())
         print(self.chance_type, self.position, self.options)
+
+    def craft_chance(self, chance, action):
+        pass
 
 
 class Match:
@@ -76,19 +85,25 @@ class Match:
     def start_match(self):
 
         chance_weights = {'oo': (50, 50), 'om': (60, 40), 'od': (75, 25),
-                        'mm': (50, 50), 'md': (60, 40), 'dd': (50, 50)}
+                        'mm': (50, 50), 'md': (60, 40), 'dd': (50, 50),
+                        'mo': (40, 60), 'do':(75, 25), 'dm':(40, 60)}
         
-        clash = f"{self.team1.style}{self.team2.style}"
-        weight = chance_weights[clash if clash in chance_weights else f"{self.team2.style}{self.team1.style}"]
+        self.weight = chance_weights[f"{self.team1.style}{self.team2.style}"]
 
         while self.time > 90 + self.extra_time:
-            chance = Chance(self.team1, self.team2)
+            chance = Chance(self.team1, self.team2, self.weight)
             self.execute_chance(chance)
             
-            self.time += random.randint(0, 10)
-            
+            self.time += random.randint(2, 10)
+
+            time.sleep(3)
+    
     def execute_chance(self, chance):
-        pass
+        # for now, randomly choose action
+        option = random.choice(chance.options)
+
+        new_chance = Chance(self.team1, self.team2, self.weight, linked=True, prev_chance=chance, action=option)
+        self.execute_chance(new_chance)
             
 
 
