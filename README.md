@@ -33,6 +33,7 @@ NOTE: `<field>` basically has to be either `team` or `player` for now, as this i
 
 The Mail System is a way for the user to receive messages about the events of their world, for example a note from the team board. Note that it can also be used by teams to send contracts to users which can be accepted or rejected by the user in the interface itself.
 
+
 A mail is divided based on its type: 
 
 1. Message
@@ -43,3 +44,7 @@ A mail is divided based on its type:
 The logic for finding a team's starting XI is simple: Find the best players for each position. For now, this is the maximum complexity. the `starting11` function returns a dictionary with all the starting players included. A team's starting XI can be viewed with the command `/view 11 <team>` (NOTE: Proportions will be fixed later)
 
 ![image](https://user-images.githubusercontent.com/119870649/206257976-d61168d7-1ad8-477f-b75f-e40266c3a210.png)
+
+## Currently Working On
+
+Game play logic (without weights) and interaction with user with chance generation and more.
